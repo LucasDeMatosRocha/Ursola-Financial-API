@@ -4,6 +4,7 @@
 #include <iostream>
 #include <Windows.h>
 
+
 namespace CashFlow
 {
 	class RollInTime_ErrorHandling
@@ -215,6 +216,38 @@ namespace CashFlow
 				return PresentValue_Result;
 			}
 
+
+			/*
+			* Absolute Tax (Math)
+			*
+			* ABS Tax = FV / PV
+			*
+			* PV : Present Value
+			* FV : Future Value
+			*/
+
+			double GetTax(double FutureValue,double PresentValue)
+			{
+				double TaxaValue;
+
+				try
+				{
+			    	TaxaValue = FutureValue / PresentValue;
+				}
+				catch (char* ErrCode_Message[])
+				{
+					/*
+					* Second Time : External (DEBUG) Runtime Error Handling.
+					*/
+
+					if (ErrCode_Message != nullptr) {
+#define ErrCode_DBG = ErrCode_Message;
+					}
+				}
+			
+			
+				return TaxaValue;
+			}
 
 	};
 

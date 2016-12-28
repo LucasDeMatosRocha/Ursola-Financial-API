@@ -9,9 +9,20 @@ int main(int argc,char* argv[])
 
 	RollInTime cash;
 
-	std::cout<<"FV: $ "<<cash.FutureValue(1000, 0.04, 10)<<std::endl;
-	std::cout<<"PV: $ "<<cash.PresentValue(1480.24, 0.04, 10)<<std::endl;
+	double fv = cash.FutureValue(1000,// Present value ($)
+		0.04,                         // Interest Rate (Tax,%)
+		10);                          // Period Size (n)
 
+	std::cout<< "FV : $ " << fv << std::endl ;
+
+	double pv = cash.PresentValue(1480.24, // Future value ($)
+		0.04,                              // Interest Rate (Tax,%)
+		10);                               // Period Size (n)
+
+	std::cout << "PV : $ " << pv << std::endl;
+
+
+	std::cout << "Absolute Tax" << cash.GetTax(pv,fv) << std::endl; // Get Absolute Tax
 
 	std::cin.get();
 

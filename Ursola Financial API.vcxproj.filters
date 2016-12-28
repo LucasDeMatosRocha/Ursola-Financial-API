@@ -36,5 +36,8 @@
     <ClInclude Include="CashFlow.h">
       <Filter>UFAPI</Filter>
     </ClInclude>
+    <ClInclude Include="UFAPI_NumericTools.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
