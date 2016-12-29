@@ -1,9 +1,9 @@
-#pragma once
+﻿#pragma once
 
 #include <math.h>
 #include <iostream>
 #include <Windows.h>
-
+#include <queue>
 
 namespace CashFlow
 {
@@ -134,6 +134,8 @@ namespace CashFlow
 
     	public:
 
+			// User ONLY for NPV ou NFV
+
 			/*
 			 * Future Value (FV)
 			 *
@@ -248,6 +250,102 @@ namespace CashFlow
 			
 				return TaxaValue;
 			}
+
+	};
+
+	/*
+	 * Get Net Present and Future Values
+     */
+
+	class NetValues
+	{
+	private:
+
+		double count = 0;
+
+	public:
+		std::queue<double> CashInFlow;
+	
+
+
+		/*
+		* Net Present Value (NPV)
+		*
+		* NPV = Σ[FV / (1+i)^n] - I0
+		*
+		* I0 : Investment (FV0)
+		* FV : Future Value
+		* i  : Interest Rate
+		* n  : Period Size
+		*/
+
+		double NetPresentValue(double FutureValue,double Investment, double InterestRate, double PeriodSize)
+		{
+			double PresentValue_Result;
+				
+
+										/*
+										* First Time : Internal (NONDEBUG) Financial Math Error Handling.
+										*/
+
+			RollInTime_ErrorHandling errHandling;
+			errHandling.Check_DataInput_OnFinancial_Funcion_PV(&FutureValue, &InterestRate, &PeriodSize);
+
+			try
+			{
+				while (count < PeriodSize)
+				{
+					count += 1;
+					
+					PresentValue_Result  = (FutureValue) / (pow((1 + InterestRate), PeriodSize));
+					CashInFlow.push(PresentValue_Result);
+
+					PresentValue_Result -= Investment;
+
+				}
+			}
+			catch (char* ErrCode_Message[])
+			{
+				/*
+				* Second Time : External (DEBUG) Runtime Error Handling.
+				*/
+
+				if (ErrCode_Message != nullptr) {
+#define ErrCode_DBG = ErrCode_Message;
+				}
+			}
+
+			return PresentValue_Result;
+		}
+
+
+		/*
+		 * Get the Net Present Value CashFlow
+		 * or Get until some point of CashFlow.
+		 */
+
+
+#define NONE 0.0
+
+		void GetFull_NPV_CashFlow(bool return_all_cashflow,bool return_until_some_specifc_period,double specific_period)
+		{
+			
+			if(return_all_cashflow == true)
+			{
+			// Full CASH FLOW.
+
+				
+				
+			}
+			else
+			{
+			// Limited CASH FLOW.
+
+
+			}
+
+		}
+
 
 	};
 
